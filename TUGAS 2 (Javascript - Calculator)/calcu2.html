@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator V2</title>
+  </head>
+  <body>
+    <h1>Kalkulator Versi 2</h1>
+    <table>
+      <tr>
+        <td><button id="tujuh">7</button></td>
+        <td><button id="delapan">8</button></td>
+        <td><button id="sembilan">9</button></td>
+        <td><button id="tambah">+</button></td>
+      </tr>
+      <tr>
+        <td><button id="empat">4</button></td>
+        <td><button id="lima">5</button></td>
+        <td><button id="enam">6</button></td>
+        <td><button id="kurang">-</button></td>
+      </tr>
+      <tr>
+        <td><button id="satu">1</button></td>
+        <td><button id="dua">2</button></td>
+        <td><button id="tiga">3</button></td>
+        <td><button id="kali">*</button></td>
+      </tr>
+      <tr>
+        <td><button id="nol">0</button></td>
+        <td><button id="hapus">C</button></td>
+        <td><button id="hasil">=</button></td>
+        <td><button id="bagi">/</button></td>
+      </tr>
+    </table>
+    <input type="text" id="result" disabled />
+
+    <script>
+      const tujuhButton = document.getElementById("tujuh");
+      const delapanButton = document.getElementById("delapan");
+      const sembilanButton = document.getElementById("sembilan");
+      const tambahButton = document.getElementById("tambah");
+      const empatButton = document.getElementById("empat");
+      const limaButton = document.getElementById("lima");
+      const enamButton = document.getElementById("enam");
+      const kurangButton = document.getElementById("kurang");
+      const satuButton = document.getElementById("satu");
+      const duaButton = document.getElementById("dua");
+      const tigaButton = document.getElementById("tiga");
+      const kaliButton = document.getElementById("kali");
+      const nolButton = document.getElementById("nol");
+      const hapusButton = document.getElementById("hapus");
+      const hasilButton = document.getElementById("hasil");
+      const bagiButton = document.getElementById("bagi");
+
+      tujuhButton.onclick = function () {
+        document.getElementById("result").value += "7";
+      };
+
+      delapanButton.onclick = function () {
+        document.getElementById("result").value += "8";
+      };
+
+      sembilanButton.onclick = function () {
+        document.getElementById("result").value += "9";
+      };
+
+      tambahButton.onclick = function () {
+        document.getElementById("result").value += "+";
+      };
+
+      empatButton.onclick = function () {
+        document.getElementById("result").value += "4";
+      };
+
+      limaButton.onclick = function () {
+        document.getElementById("result").value += "5";
+      };
+
+      enamButton.onclick = function () {
+        document.getElementById("result").value += "6";
+      };
+
+      kurangButton.onclick = function () {
+        document.getElementById("result").value += "-";
+      };
+
+      satuButton.onclick = function () {
+        document.getElementById("result").value += "1";
+      };
+
+      duaButton.onclick = function () {
+        document.getElementById("result").value += "2";
+      };
+
+      tigaButton.onclick = function () {
+        document.getElementById("result").value += "3";
+      };
+
+      kaliButton.onclick = function () {
+        document.getElementById("result").value += "*";
+      };
+
+      nolButton.onclick = function () {
+        document.getElementById("result").value += "0";
+      };
+
+      hapusButton.onclick = function () {
+        document.getElementById("result").value = "";
+      };
+
+      hasilButton.onclick = function () {
+        try {
+          const result = eval(document.getElementById("result").value);
+          document.getElementById("result").value = result;
+        } catch (error) {
+          document.getElementById("result").value = "Error";
+        }
+      };
+
+      bagiButton.onclick = function () {
+        document.getElementById("result").value += "/";
+      };
+    </script>
+  </body>
+</html>
