@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Adfi Weather</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+  </head>
+
+  <body id="page-top">
+    <div class="container-fluid py-5">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-sm-table align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Weather Center</h1>
+          <p class="text-lg-left mb-0 text-gray-800">Check Current Weather Now</p>
+        </div>
+        <form class="d-none d-sm-inline-block form-inline justify-content-end mw-100 align-items-end navbar-search">
+          <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Search City" aria-label="Search" aria-describedby="basic-addon2" id="searchInput" />
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" id="searchButton">
+                <i class="fas fa-search fa-sm"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="justify-content-center">
+        <div class="row">
+          <div class="col-xl-4 col-md-6 mb-4" id="weather-box">
+            <div class="card border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <i class="fas fa-cloud fa-3x text-info"></i>
+                  </div>
+                  <div class="col ml-2" style="text-align: right">
+                    <p id="temperature" class="h5 mb-0 text-xl font-weight-bold text-gray-800"></p>
+                    <p class="text-xl font-weight-bold text-gray-800 mb-1">Temperature</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-6 mb-4" id="humidity">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <i class="fas fa-wave-square fa-3x text-primary"></i>
+                  </div>
+                  <div class="col ml-2" style="text-align: right">
+                    <p id="humidityValue" class="h5 mb-0 text-xl font-weight-bold text-gray-800"></p>
+                    <p class="text-xl font-weight-bold text-gray-800 mb-1">Humidity</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-6 mb-4" id="wind-speed">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <i class="fas fa-wind fa-3x text-success"></i>
+                  </div>
+                  <div class="col ml-2" style="text-align: right">
+                    <p id="windSpeedValue" class="h5 mb-0 text-xl font-weight-bold text-gray-800"></p>
+                    <p class="text-xl font-weight-bold text-gray-800 mb-1">Wind</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const apiKey = "2fe264edf6d480f8d195fe92ba45f596";
+      const weatherBox = document.getElementById("weather-box");
+      const humidity = document.getElementById("humidity");
+      const windSpeed = document.getElementById("wind-speed");
+      const temperatureElement = document.getElementById("temperature");
+      const descriptionElement = document.getElementById("description");
+      const humidityElement = document.getElementById("humidityValue");
+      const windSpeedElement = document.getElementById("windSpeedValue");
+
+      function fetchWeatherData(city) {
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            temperatureElement.textContent = data.main.temp + "°C";
+            humidityElement.textContent = data.main.humidity + "%";
+            windSpeedElement.textContent = data.wind.speed + " m/s";
+          })
+          .catch((error) => {
+            console.error("Failed to fetch weather data:", error);
+          });
+      }
+
+      const searchButton = document.getElementById("searchButton");
+      const searchInput = document.getElementById("searchInput");
+      searchButton.addEventListener("click", function () {
+        const city = searchInput.value;
+        fetchWeatherData(city);
+      });
+    </script>
+  </body>
+</html>
