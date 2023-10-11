@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>MovieWingz. | Find Your Movie</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <style>
+      #movie_poster {
+        display: none;
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+      <div class="container px-4 px-lg-5 collapse navbar-collapse">
+        <a class="navbar-brand fw-bolder text-light" href="#!">MovieWingz.</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <form class="d-none d-sm-inline-block form-inline justify-content-end mw-100 align-items-end navbar-search">
+          <div class="input-group gap-2">
+            <input type="text" class="form-control bg-light rounded-2" placeholder="Search title" aria-label="Search" id="searchInput" />
+            <div class="input-group-append">
+              <button class="btn btn-light" type="button" id="searchButton">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </nav>
+
+    <section class="py-5">
+      <div class="container px-4 my-5">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <img id="movie_poster" class="card-img-top mb-5 mb-md-0 rounded-5" src="" alt="Movie Poster" />
+            </div>
+            <div class="col-md-6">
+                <h1 id="movie_title" class="display-6 fw-bolder text-danger"></h1>
+                <div class="fs-5 mb-5">
+                    <p id="movie_director"></p>
+                    <p id="movie_released"></p>
+                    <p id="movie_actors"></p>
+                    <p id="movie_genre"></p>
+                    <p id="movie_rated"></p>
+                </div>
+                
+                <p id="movie_plot" class="lead"></p>
+
+            </div>
+        </div>
+        </div>
+      </div>
+    </section>
+    <p id="notFound" class="text-dark text-center fw-bolder">. . . Movie Not Found</p>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      const apiKey = "466e1468";
+      const movieTitleElement = $("#movie_title");
+      const movieDirectorElement = $("#movie_director");
+      const movieReleasedElement = $("#movie_released");
+      const movieActorsElement = $("#movie_actors");
+      const movieGenreElement = $("#movie_genre");
+      const movieRatedElement = $("#movie_rated");
+      const moviePlotElement = $("#movie_plot");
+      const moviePosterElement = $("#movie_poster");
+      const notFoundElement = $("#notFound");
+      
+      
+
+      function fetchMovieData(title) {
+        const apiUrl = `http://www.omdbapi.com/?t=${title}&apikey=${apiKey}`;
+
+        $.ajax({
+          url: apiUrl,
+          success: function (data) {
+        if (data.Response === "True") {
+            notFoundElement.hide();
+            
+            movieTitleElement.text(data.Title);
+            movieDirectorElement.text(`Director: ${data.Director}`);
+            movieReleasedElement.text(`Released: ${data.Released}`);
+            movieActorsElement.text(`Actors: ${data.Actors}`);
+            movieGenreElement.text(`Genre: ${data.Genre}`);
+            movieRatedElement.text(`Rated: ${data.Rated}`);
+            moviePlotElement.text(`Plot:\n${data.Plot}`);
+            moviePosterElement.attr("src", data.Poster).show();
+        } else {
+            notFoundElement.show();
+            
+            movieTitleElement.text("");
+            movieDirectorElement.text("");
+            movieReleasedElement.text("");
+            movieActorsElement.text("");
+            movieGenreElement.text("");
+            movieRatedElement.text("");
+            moviePlotElement.text("");
+            moviePosterElement.hide();
+        }
+        },
+          error: function (error) {
+            console.error("Failed to fetch movie data:", error);
+          },
+        });
+      }
+
+      const searchButton = $("#searchButton");
+      const searchInput = $("#searchInput");
+      searchButton.click(function () {
+        const title = searchInput.val();
+        fetchMovieData(title);
+      });
+    </script>
+  </body>
+</html>
